@@ -10,5 +10,14 @@ module.exports = {
       // https://panjiachen.github.io/vue-element-admin-site/guide/advanced/lazy-loading.html
       'plugins': ['dynamic-import-node']
     }
-  }
+  },
+  // 按需引入语言包
+  plugins: [
+    [
+      'prismjs',
+      {
+        languages: ['json','java','c','sql','py','sass','scss','html','js','css','xml'],
+      },
+    ],
+  ],
 }
