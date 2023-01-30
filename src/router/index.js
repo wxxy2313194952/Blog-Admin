@@ -75,16 +75,37 @@ export const constantRoutes = [
   {
     path: '/list',
     component: Layout,
+    redirect: '/list/index',
+    meta: {
+      title: '文章管理',
+      icon: 'el-icon-document'
+    },
     children: [
       {
         path: 'index',
         name: 'List',
         component: () => import("@/views/list"),
         meta: {
-          title: '文章列表',
-          icon: 'el-icon-document'
-        }
-      }
+          title: '文章列表', icon: 'el-icon-menu'},
+      },
+      {
+        path: 'articleEdit',
+        component: () => import('@/views/list/articleEdit'),
+        name: 'ArticleEdit',
+        meta: { title: '文章修改', icon: 'el-icon-edit-outline'}
+      },
+      {
+        path: 'articleShow',
+        component: () => import('@/views/list/articleShow'),
+        name: 'ArticleShow',
+        hidden: true
+      },
+      {
+        path: 'articleImage',
+        component: () => import('@/views/list/articleImage'),
+        name: 'ArticleImage',
+        meta: { title: '封面编辑', icon: 'el-icon-picture'}
+      },
     ]
   },
   // 留言管理

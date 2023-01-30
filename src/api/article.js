@@ -23,3 +23,31 @@ export function reqAddArticle(data) {
     data
   })
 }
+
+// 获取文章列表  分页
+export function reqGetArticleList(params) {
+  return request({
+    url: '/admin/article/getarticlelist',
+    method: 'get',
+    params
+  })
+}
+
+// 获取文章总数
+export function reqGetArticleNum() {
+  return request({
+    url: '/admin/article/getarticlenum',
+    method: 'get',
+  })
+}
+// 删除文章
+export function reqDelArticle(id) {
+  return request({
+    url: `/admin/article/delarticle/${id}`,
+    method: 'get',
+  })
+}
+
+
+
+
