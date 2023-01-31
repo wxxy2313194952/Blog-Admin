@@ -47,6 +47,22 @@ export function reqDelArticle(id) {
     method: 'get',
   })
 }
+// 获取文章详情
+export function reqGetArticle(id) {
+  return request({
+    url: `/admin/article/getarticle/${id}`,
+    method: 'get',
+  })
+}
+// 编辑文章
+export function reqEditArticle(data) {
+  return request({
+    url: `/admin/article/editarticle`,
+    method: 'post',
+    params:data
+  })
+}
+
 
 
 

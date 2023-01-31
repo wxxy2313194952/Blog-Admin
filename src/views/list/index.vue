@@ -70,7 +70,7 @@
           <el-button
             size="mini"
             type="primary"
-            @click="handleEdit(scope.$index, scope.row)"
+            @click="handleShow(scope.$index, scope.row)"
             >查看</el-button
           >
           <el-button
@@ -131,7 +131,16 @@ export default {
   },
   methods: {
     handleEdit(index, row) {
-      console.log(index, row);
+      this.$router.push({
+	      name:'ArticleEdit',
+		    params:{id:row.id}
+      })
+    },
+    handleShow(index, row) {
+      this.$router.push({
+	      name:'ArticleShow',
+		    params:{id:row.id}
+      })
     },
     handleDelete(index, row) {
       this.$confirm("确定删除该文章吗？", "提示", {

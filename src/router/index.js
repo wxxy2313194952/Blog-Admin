@@ -86,19 +86,21 @@ export const constantRoutes = [
         name: 'List',
         component: () => import("@/views/list"),
         meta: {
-          title: '文章列表', icon: 'el-icon-menu'},
+          title: '文章列表', icon: 'el-icon-menu'
+        }
+      },
+      {
+        path: 'articleShow/:id',
+        component: () => import('@/views/list/articleShow'),
+        name: 'ArticleShow',
+        hidden: true,
+        meta: {title: '文章详情'},
       },
       {
         path: 'articleEdit',
         component: () => import('@/views/list/articleEdit'),
         name: 'ArticleEdit',
         meta: { title: '文章修改', icon: 'el-icon-edit-outline'}
-      },
-      {
-        path: 'articleShow',
-        component: () => import('@/views/list/articleShow'),
-        name: 'ArticleShow',
-        hidden: true
       },
       {
         path: 'articleImage',
