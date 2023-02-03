@@ -1,4 +1,5 @@
-import { reqGetArticleClass, reqGetArticleTag, reqGetArticleList,reqGetArticleNum } from '@/api/article'
+import { reqGetArticleList,reqGetArticleNum } from '@/api/article'
+import { reqGetArticleClass, reqGetArticleTag } from '@/api/artcate'
 
 const state = {
   artClass: [],

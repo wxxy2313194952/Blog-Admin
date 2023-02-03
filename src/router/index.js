@@ -52,8 +52,20 @@ export const constantRoutes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: '数据展示', icon: 'dashboard' }
     }]
+  },
+  // 访客统计
+  {
+    path: '/visit',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'Visit',
+        component: () => import('@/views/visit'),
+        meta: { title: '访客统计', icon: 'dashboard' }
+      }
+    ]
   },
   // 文章编辑
   {
@@ -94,7 +106,7 @@ export const constantRoutes = [
         component: () => import('@/views/list/articleShow'),
         name: 'ArticleShow',
         hidden: true,
-        meta: {title: '文章详情'},
+        meta: { title: '文章详情' },
       },
       {
         path: 'articleEdit',
@@ -108,6 +120,36 @@ export const constantRoutes = [
         name: 'ArticleImage',
         meta: { title: '封面编辑', icon: 'el-icon-picture'}
       },
+    ]
+  },
+  // 分类管理
+  {
+    path: '/classification',
+    component: Layout,
+    redirect: '/classification',
+    meta: {
+      title: '分类管理',
+      icon: 'el-icon-discount'
+    },
+    children: [
+      {
+        path: 'articleclass',
+        name: 'ArticleClass',
+        component: () => import("@/views/classification/articleclass"),
+        meta: {
+          title: '文章分类',
+          icon: 'el-icon-discount'
+        }
+      },
+      {
+        path: 'articletag',
+        name: 'ArticleTag',
+        component: () => import("@/views/classification/articletag"),
+        meta: {
+          title: '文章标签',
+          icon: 'el-icon-discount'
+        }
+      }
     ]
   },
   // 留言管理
@@ -142,70 +184,22 @@ export const constantRoutes = [
       }
     ]
   },
-  // 分类管理
-  {
-    path: '/classification',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'Classification',
-        component: () => import("@/views/classification"),
-        meta: {
-          title: '分类管理',
-          icon: 'el-icon-discount'
-        }
-      }
-    ]
-  },
   // 时间轴管理
-  {
-    path: '/time',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'Time',
-        component: () => import("@/views/time"),
-        meta: {
-          title: '时间轴管理',
-          icon: 'el-icon-collection-tag'
-        }
-      }
-    ]
-  },
-/** {
-    path: '/nested',
-    component: Layout,
-    redirect: '/nested/menu1',
-    name: 'Nested',
-    meta: {
-      title: 'Nested',
-      icon: 'nested'
-    },
-    children: [
-      {
-        path: 'menu1',
-        component: () => import('@/views/nested/menu1/index'), // Parent router-view
-        name: 'Menu1',
-        meta: { title: 'Menu1' },
-        children: [
-          {
-            path: 'menu1-1',
-            component: () => import('@/views/nested/menu1/menu1-1'),
-            name: 'Menu1-1',
-            meta: { title: 'Menu1-1' }
-          },
-        ]
-      },
-      {
-        path: 'menu2',
-        component: () => import('@/views/nested/menu2/index'),
-        name: 'Menu2',
-        meta: { title: 'menu2' }
-      }
-    ]
-  },*/
+  // {
+  //   path: '/time',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       name: 'Time',
+  //       component: () => import("@/views/time"),
+  //       meta: {
+  //         title: '时间轴管理',
+  //         icon: 'el-icon-collection-tag'
+  //       }
+  //     }
+  //   ]
+  // },
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }

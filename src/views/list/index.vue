@@ -107,6 +107,7 @@
 <script>
 import { mapState } from "vuex";
 import { reqDelArticle } from "@/api/article";
+import { accessLeave } from '@/api/access'
 export default {
   name: "List",
   data() {
@@ -122,6 +123,7 @@ export default {
   mounted() {
     this.getData();
     this.$store.dispatch("article/getArticleNum");
+    accessLeave('访问文章管理列表').catch(e => {})
   },
   computed: {
     ...mapState({

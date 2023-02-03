@@ -137,11 +137,19 @@ export default {
     },
     // 选择标签
     selectTag(){
-      this.articleTag.forEach(el => {
-        if(el.id == this.tagId){
-          this.tags.push(el)
+      this.articleTag.forEach((el) => {
+        if (el.id == this.tagId) {
+          // 判断当前标签列表中有无要添加的元素 不能重复添加
+          if (this.tags.indexOf(el) < 0) {
+            this.tags.push(el);
+          } else {
+            this.$message({
+              type: "warning",
+              message: "不可重复添加",
+            });
+          }
         }
-      })
+      });
       this.form.label = JSON.stringify(this.tags)
     },
     // 删除选中的标签

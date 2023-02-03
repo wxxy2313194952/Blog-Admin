@@ -6,13 +6,16 @@
 
 <script>
 import { mapGetters } from 'vuex'
-
+import { accessLeave } from '@/api/access'
 export default {
   name: 'Dashboard',
   computed: {
     ...mapGetters([
       'name'
     ])
+  },
+  mounted() {
+    accessLeave('访问后台管理首页').catch(e => {})
   }
 }
 </script>

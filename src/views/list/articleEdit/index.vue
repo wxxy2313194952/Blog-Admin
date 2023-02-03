@@ -71,22 +71,20 @@
         </el-col>
         <el-col :span="1">
           <el-form-item class="btn-submit">
-            <el-button type="primary" @click="onSubmit()"
-              >保存</el-button
-            >
+            <el-button type="primary" @click="onSubmit()">保存</el-button>
           </el-form-item>
         </el-col>
       </el-row>
       <!-- 提交按钮 -->
     </el-form>
-    <Edit :newData="getNewData"/>
+    <Edit :newData="getNewData" />
   </div>
 </template>
 
 <script>
 import Edit from "./edit";
 import { mapState } from "vuex";
-import { reqGetArticle,reqEditArticle } from "@/api/article";
+import { reqGetArticle, reqEditArticle } from "@/api/article";
 export default {
   name: "ArticleEdit",
   components: { Edit },
@@ -118,10 +116,18 @@ export default {
       this.form.classification = this.classId;
     },
     // 选择标签
-    selectTag() {
+    selectTag(tag) {
       this.articleTag.forEach((el) => {
         if (el.id == this.tagId) {
-          this.tags.push(el);
+          // 判断当前标签列表中有无要添加的元素 不能重复添加
+          if (this.tags.indexOf(el) < 0) {
+            this.tags.push(el);
+          } else {
+            this.$message({
+              type: "warning",
+              message: "不可重复添加",
+            });
+          }
         }
       });
       this.form.label = JSON.stringify(this.tags);
@@ -146,31 +152,29 @@ export default {
         }
       });
     },
-    getNewData(val){
-      this.form.content = val
+    getNewData(val) {
+      this.form.content = val;
     },
     // 提交
     async onSubmit() {
-      let artInfo = this.form
-      artInfo.id = this.$route.params.id
+      let artInfo = this.form;
+      artInfo.id = this.$route.params.id;
       const result = await reqEditArticle(artInfo);
-      if (result.code == 200){
+      if (result.code == 200) {
         this.$message({
           message: "编辑文章成功",
           type: "success",
         });
-      }else{
+      } else {
         this.$message({
           message: "编辑文章失败",
           type: "warning",
         });
       }
       this.$router.push({
-        name: 'List'
-      })
-      
-      
-      
+        name: "List",
+      });
+
       // this.form.state = artState;
       // const newFormData = new FormData();
       // for (const item in this.form) {
@@ -208,7 +212,7 @@ export default {
         this.form.describe = result.data.describe;
         this.classId = this.form.classification = result.data.classification;
         this.form.content = result.data.content;
-        this.$bus.$emit('getData',result.data.content)
+        this.$bus.$emit("getData", result.data.content);
         this.articleTag.forEach((el) => {
           result.data.tags.forEach((it) => {
             if (el.name == it) {
@@ -216,7 +220,7 @@ export default {
             }
           });
         });
-        this.form.label = JSON.stringify(this.tags)
+        this.form.label = JSON.stringify(this.tags);
         this.articleInfo = result.data;
       } else {
         this.$message({
@@ -224,11 +228,11 @@ export default {
           message: "获取用户信息失败",
         });
       }
-    }else{
+    } else {
       this.$message({
-        type: 'warning',
-        message: '请选择文章'
-      })
+        type: "warning",
+        message: "请选择文章",
+      });
     }
   },
 };

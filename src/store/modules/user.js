@@ -33,7 +33,7 @@ const actions = {
     // 解构出用户名和密码
     const { username, password } = userInfo
     let result = await reqLogin({ username: username.trim(), password: password })
-    // console.log(result);
+    // console.log(result)
     if (result.code == 200) {
       commit('SET_TOKEN', result.data.Token)
       setToken(result.data.Token)
