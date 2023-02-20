@@ -1,6 +1,5 @@
 // Token的存、取、删除
 const TokenKey = 'lime_admin_token'
-const TokenCity = 'ip_city_token'
 
 
 export const setToken = (token) => {
@@ -13,12 +12,4 @@ export const getToken = () => {
 
 export const removeToken = () => {
   localStorage.removeItem(TokenKey)
-}
-
-export const setCityToken = (token) => {
-  sessionStorage.setItem(TokenCity, token)
-}
-
-export const getCityToken = () => {
-  return sessionStorage.getItem(TokenCity)
 }

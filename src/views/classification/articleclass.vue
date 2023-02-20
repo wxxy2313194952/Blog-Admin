@@ -28,7 +28,8 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState,mapGetters } from "vuex";
+import { rulePuss } from "@/utils/rules";
 import {
   addArticleClass,
   editArticleClass,
@@ -43,16 +44,24 @@ export default {
         cancelButtonText: "取消",
       })
         .then(async ({ value }) => {
-          let res = await editArticleClass({name: value,id: row.id});
-          if (res.code == 200) {
+          // 判断权限
+          if(!rulePuss(this.rules)){
             this.$message({
-              message: "编辑成功",
-              type: "success",
-            });
-            this.getData();
-            return res.message;
-          } else {
-            return Promise.reject(res.message);
+                message: "权限不足，无法修改",
+                type: "error",
+              });
+          }else{
+            let res = await editArticleClass({name: value,id: row.id});
+            if (res.code == 200) {
+              this.$message({
+                message: "编辑成功",
+                type: "success",
+              });
+              this.getData();
+              return res.message;
+            } else {
+              return Promise.reject(res.message);
+            }
           }
         })
         .catch(() => {
@@ -69,16 +78,24 @@ export default {
         type: "warning",
       })
         .then(async () => {
-          let res = await delArticleClass({ id: row.id });
-          if (res.code == 200) {
+          // 判断权限
+          if(!rulePuss(this.rules)){
             this.$message({
-              message: "删除成功",
-              type: "success",
-            });
-            this.getData();
-            return res.message;
-          } else {
-            return Promise.reject(res.message);
+                message: "权限不足，无法删除",
+                type: "error",
+              });
+          }else{
+            let res = await delArticleClass({ id: row.id });
+            if (res.code == 200) {
+              this.$message({
+                message: "删除成功",
+                type: "success",
+              });
+              this.getData();
+              return res.message;
+            } else {
+              return res.message
+            }
           }
         })
         .catch(() => {
@@ -94,16 +111,24 @@ export default {
         cancelButtonText: "取消",
       })
         .then(async ({ value }) => {
-          let res = await addArticleClass({name: value});
-          if (res.code == 200) {
+          // 判断权限
+          if(!rulePuss(this.rules)){
             this.$message({
-              message: "添加成功",
-              type: "success",
-            });
-            this.getData();
-            return res.message;
-          } else {
-            return Promise.reject(res.message);
+                message: "权限不足，无法添加",
+                type: "error",
+              });
+          }else{
+            let res = await addArticleClass({name: value});
+            if (res.code == 200) {
+              this.$message({
+                message: "添加成功",
+                type: "success",
+              });
+              this.getData();
+              return res.message;
+            } else {
+              return Promise.reject(res.message);
+            }
           }
         })
         .catch(() => {
@@ -118,6 +143,9 @@ export default {
     },
   },
   computed: {
+    ...mapGetters([
+      'rules'
+    ]),
     ...mapState({
       articleClass: (state) => state.artcate.artClass,
     }),

@@ -98,8 +98,9 @@
 
 <script>
 import Editor from "./editor";
-import { mapState } from 'vuex'
+import { mapState,mapGetters } from 'vuex'
 import {reqAddArticle} from '@/api/article'
+import { rulePuss } from "@/utils/rules";
 export default {
   name: "Article",
   components: { Editor },
@@ -201,28 +202,40 @@ export default {
     },
     // 提交
     async onSubmit(artState) {
-      this.form.state = artState
-      const newFormData = new FormData()
-      for (const item in this.form) {
-        newFormData.append(item, this.form[item])
-      }
-      const result = await reqAddArticle(newFormData)
-      if(result.code == 200){
+      //判断权限
+      if(!rulePuss(this.rules)){
         this.$message({
-          message: '发布文章成功',
-          type: 'success'
-        })
-        this.form.title = ""
-        this.form.describe = ""
-        this.classId = ""
-        this.tagId = ""
-        this.tags.splice(0,this.tags.length)
-        this.fileList.splice(0,this.tags.length)
-        this.$bus.$emit('clearCont','')
+          message: "权限不足，无法修改",
+          type: "error",
+        });
+      }else{
+        this.form.state = artState
+        const newFormData = new FormData()
+        for (const item in this.form) {
+          newFormData.append(item, this.form[item])
+        }
+        const result = await reqAddArticle(newFormData)
+        if(result.code == 200){
+          this.$message({
+            message: '发布文章成功',
+            type: 'success'
+          })
+          this.form.title = ""
+          this.form.describe = ""
+          this.classId = ""
+          this.tagId = ""
+          this.tags.splice(0,this.tags.length)
+          this.fileList.splice(0,this.tags.length)
+          this.$bus.$emit('clearCont','')
+        }
       }
+      
     }
   },
   computed: {
+    ...mapGetters([
+      'rules'
+    ]),
     ...mapState({
       articleClass: (state) => state.article.artClass,
       articleTag: (state) => state.article.tags,

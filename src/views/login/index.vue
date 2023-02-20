@@ -3,7 +3,11 @@
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
 
       <div class="title-container">
-        <h3 class="title">Login Form</h3>
+        <h3 class="title">管理后台</h3>
+      </div>
+
+      <div class="tips">
+        <span class="tips-span">（后台对外开放，请直接登录）</span>
       </div>
 
       <el-form-item prop="username">
@@ -41,12 +45,9 @@
         </span>
       </el-form-item>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
+      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
 
-      <div class="tips">
-        <span style="margin-right:20px;">username: admin</span>
-        <span> password: any</span>
-      </div>
+      
 
     </el-form>
   </div>
@@ -60,14 +61,14 @@ export default {
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
-        callback(new Error('Please enter the correct user name'))
+        callback(new Error('请输入正确的用户名'))
       } else {
         callback()
       }
     }
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6) {
-        callback(new Error('The password can not be less than 6 digits'))
+        callback(new Error('密码不能少于6位'))
       } else {
         callback()
       }
@@ -75,7 +76,7 @@ export default {
     return {
       loginForm: {
         username: 'admin',
-        password: '111111'
+        password: '666666'
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
@@ -195,14 +196,14 @@ $light_gray:#eee;
   }
 
   .tips {
-    font-size: 14px;
-    color: #fff;
-    margin-bottom: 10px;
+    font-size: 19px;
+    color: #ddd;
 
-    span {
-      &:first-of-type {
-        margin-right: 16px;
-      }
+    .tips-span{
+      text-align: center;
+      font-weight: bold;
+      display: block;
+      margin: 0px auto 30px auto;
     }
   }
 
@@ -218,9 +219,9 @@ $light_gray:#eee;
     position: relative;
 
     .title {
-      font-size: 26px;
+      font-size: 30px;
       color: $light_gray;
-      margin: 0px auto 40px auto;
+      margin: 0px auto 30px auto;
       text-align: center;
       font-weight: bold;
     }

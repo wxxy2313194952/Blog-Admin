@@ -15,11 +15,10 @@ export function reqLogin(data) {
   })
 }
 
-export function reqGetInfo(token) {
+export function reqGetInfo() {
   return request({
     url: '/admin/user/getinfo',
-    method: 'get',
-    // params: { token }
+    method: 'get'
   })
 }
 

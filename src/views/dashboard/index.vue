@@ -5,17 +5,23 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters,mapState } from 'vuex'
 import { accessLeave } from '@/api/access'
 export default {
   name: 'Dashboard',
   computed: {
     ...mapGetters([
       'name'
-    ])
+    ]),
+    ...mapState({
+      city: (state) => state.access.city
+    })
   },
   mounted() {
-    accessLeave('访问后台管理首页').catch(e => {})
+    this.$bus.$on('getCity',city => {
+      accessLeave({message:'访问后台管理首页',city}).catch(e => {})
+    })
+    
   }
 }
 </script>

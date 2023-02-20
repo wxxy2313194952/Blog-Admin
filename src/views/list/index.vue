@@ -105,7 +105,8 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState,mapGetters } from "vuex";
+import { rulePuss } from "@/utils/rules";
 import { reqDelArticle } from "@/api/article";
 import { accessLeave } from '@/api/access'
 export default {
@@ -123,12 +124,14 @@ export default {
   mounted() {
     this.getData();
     this.$store.dispatch("article/getArticleNum");
-    accessLeave('访问文章管理列表').catch(e => {})
+    accessLeave({message:'访问文章管理列表',city:this.city}).catch(e => {})
+    
   },
   computed: {
     ...mapState({
       articleList: (state) => state.article.articleList,
       articleNum: (state) => state.article.articleNum,
+      city: (state) => state.access.city
     }),
   },
   methods: {
@@ -150,16 +153,24 @@ export default {
         cancelButtonText: "取消",
         type: "warning",
       }).then(async() => {
-        let res = await reqDelArticle(row.id);
-        if (res.code == 200) {
+        // 判断权限
+        if(!rulePuss(this.rules)){
           this.$message({
-            message: "删除成功",
-            type: "success",
-          })
-          this.getData()
-          return res.message
-        }else {
-          return Promise.reject(res.message)
+              message: "权限不足，无法删除",
+              type: "error",
+            });
+        }else{
+          let res = await reqDelArticle(row.id);
+          if (res.code == 200) {
+            this.$message({
+              message: "删除成功",
+              type: "success",
+            })
+            this.getData()
+            return res.message
+          }else {
+            return Promise.reject(res.message)
+          }
         }
       }).catch(() => {
         this.$message({

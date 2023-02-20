@@ -169,21 +169,21 @@ export const constantRoutes = [
     ]
   },
   // 评论管理
-  {
-    path: '/discuss',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'Discuss',
-        component: () => import("@/views/discuss"),
-        meta: {
-          title: '评论管理',
-          icon: 'el-icon-chat-dot-round'
-        }
-      }
-    ]
-  },
+  // {
+  //   path: '/discuss',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       name: 'Discuss',
+  //       component: () => import("@/views/discuss"),
+  //       meta: {
+  //         title: '评论管理',
+  //         icon: 'el-icon-chat-dot-round'
+  //       }
+  //     }
+  //   ]
+  // },
   // 时间轴管理
   // {
   //   path: '/time',

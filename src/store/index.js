@@ -7,6 +7,7 @@ import user from './modules/user'
 import article from './modules/article'
 import access from './modules/access'
 import artcate from './modules/artcate'
+import message from './modules/message'
 
 Vue.use(Vuex)
 
@@ -17,7 +18,8 @@ const store = new Vuex.Store({
     user,
     article,
     access,
-    artcate
+    artcate,
+    message
   },
   getters
 })

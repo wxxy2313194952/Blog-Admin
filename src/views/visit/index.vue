@@ -47,7 +47,8 @@
 
 <script>
 import { accessLeave, reqDelAccess } from "@/api/access";
-import { mapState } from "vuex";
+import { mapState,mapGetters } from "vuex";
+import { rulePuss } from "@/utils/rules";
 export default {
   name: "Visit",
   data() {
@@ -64,9 +65,13 @@ export default {
   mounted() {
     this.getData();
     this.$store.dispatch("access/getAccessNum");
-    accessLeave("访问访客统计").catch((e) => {});
+    accessLeave({message:'访问访客统计',city: this.city}).catch(e => {})
+
   },
   methods: {
+    demo(city){
+      accessLeave({message:'访问访客统计',city}).catch(e => {})
+    },
     getData() {
       this.$store.dispatch("access/getAccessList", this.pag);
     },
@@ -77,16 +82,24 @@ export default {
         type: "warning",
       })
         .then(async () => {
-          let res = await reqDelAccess(row.id);
-          if (res.code == 200) {
+          // 判断权限
+          if(!rulePuss(this.rules)){
             this.$message({
-              message: "删除成功",
-              type: "success",
-            });
-            this.getData();
-            return res.message;
-          } else {
-            return Promise.reject(res.message);
+                message: "权限不足，无法删除",
+                type: "error",
+              });
+          }else{
+            let res = await reqDelAccess(row.id);
+            if (res.code == 200) {
+              this.$message({
+                message: "删除成功",
+                type: "success",
+              });
+              this.getData();
+              return res.message;
+            } else {
+              return Promise.reject();
+            }
           }
         })
         .catch(() => {
@@ -113,9 +126,13 @@ export default {
     },
   },
   computed: {
+    ...mapGetters([
+      'rules'
+    ]),
     ...mapState({
       accessList: (state) => state.access.accessList,
       accessNum: (state) => state.access.accessNum,
+      city: (state) => state.access.city
     }),
   },
 };

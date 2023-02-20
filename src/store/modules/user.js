@@ -6,7 +6,8 @@ const getDefaultState = () => {
   return {
     token: getToken(),
     nickname: '',
-    avatar: ''
+    avatar: '',
+    rules: ''
   }
 }
 
@@ -19,11 +20,10 @@ const mutations = {
   SET_TOKEN: (state, token) => {
     state.token = token
   },
-  SET_NICKNAME: (state, nickname) => {
-    state.nickname = nickname
-  },
-  SET_AVATAR: (state, avatar) => {
-    state.avatar = avatar
+  SET_USERINFO: (state, userInfo) => {
+    state.nickname = userInfo.nickname
+    state.avatar = userInfo.host + userInfo.avatar
+    state.rules = userInfo.rules
   }
 }
 
@@ -54,16 +54,14 @@ const actions = {
   },
 
   // get user info
-  async getInfo ({ commit, state }) {
-    let result = await reqGetInfo(state.token)
+  async getInfo ({ commit }) {
+    let result = await reqGetInfo()
     if (result.code == 200) {
       const { data } = result
       if (!data) {
         return Promise.reject(new Error('Verification failed, please Login again.'))
       }
-      const { nickname, avatar, host } = data
-      commit('SET_NICKNAME', nickname)
-      commit('SET_AVATAR', host + avatar)
+      commit('SET_USERINFO', data)
       return 'ok'
     } else {
       return Promise.reject(new Error('faile'))

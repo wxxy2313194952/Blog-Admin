@@ -83,7 +83,8 @@
 
 <script>
 import Edit from "./edit";
-import { mapState } from "vuex";
+import { mapState,mapGetters } from "vuex";
+import { rulePuss } from "@/utils/rules";
 import { reqGetArticle, reqEditArticle } from "@/api/article";
 export default {
   name: "ArticleEdit",
@@ -157,46 +158,37 @@ export default {
     },
     // 提交
     async onSubmit() {
-      let artInfo = this.form;
-      artInfo.id = this.$route.params.id;
-      const result = await reqEditArticle(artInfo);
-      if (result.code == 200) {
+      //判断权限
+      if(!rulePuss(this.rules)){
         this.$message({
-          message: "编辑文章成功",
-          type: "success",
+          message: "权限不足，无法修改",
+          type: "error",
         });
-      } else {
-        this.$message({
-          message: "编辑文章失败",
-          type: "warning",
+      }else{
+        let artInfo = this.form;
+        artInfo.id = this.$route.params.id;
+        const result = await reqEditArticle(artInfo);
+        if (result.code == 200) {
+          this.$message({
+            message: "编辑文章成功",
+            type: "success",
+          });
+        } else {
+          this.$message({
+            message: "编辑文章失败",
+            type: "warning",
+          });
+        }
+        this.$router.push({
+          name: "List",
         });
       }
-      this.$router.push({
-        name: "List",
-      });
-
-      // this.form.state = artState;
-      // const newFormData = new FormData();
-      // for (const item in this.form) {
-      //   newFormData.append(item, this.form[item]);
-      // }
-      // const result = await reqAddArticle(newFormData);
-      // if (result.code == 200) {
-      //   this.$message({
-      //     message: "发布文章成功",
-      //     type: "success",
-      //   });
-      //   this.form.title = "";
-      //   this.form.describe = "";
-      //   this.classId = "";
-      //   this.tagId = "";
-      //   this.tags.splice(0, this.tags.length);
-      //   this.fileList.splice(0, this.tags.length);
-      //   this.$bus.$emit("clearCont", "");
-      // }
     },
   },
   computed: {
+    ...mapGetters([
+      'rules'
+    ]),
     ...mapState({
       articleClass: (state) => state.article.artClass,
       articleTag: (state) => state.article.tags,
