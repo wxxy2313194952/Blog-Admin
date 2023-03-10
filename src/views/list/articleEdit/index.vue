@@ -77,7 +77,7 @@
       </el-row>
       <!-- 提交按钮 -->
     </el-form>
-    <Edit :newData="getNewData" />
+    <Edit :newData="getNewData" :artId="$route.params.id" />
   </div>
 </template>
 

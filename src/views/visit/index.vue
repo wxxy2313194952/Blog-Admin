@@ -29,7 +29,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <div class="pagination">
+    <div>
       <el-pagination
         background
         layout="prev, pager, next, jumper"
@@ -39,6 +39,7 @@
         prev-click
         next-click
         @current-change="handleCurrentChange"
+        style="margin-top: 20px;text-align: center;"
       >
       </el-pagination>
     </div>
@@ -65,13 +66,9 @@ export default {
   mounted() {
     this.getData();
     this.$store.dispatch("access/getAccessNum");
-    accessLeave({message:'访问访客统计',city: this.city}).catch(e => {})
-
+    accessLeave('访问访客统计(管理端)').catch(e => {})
   },
   methods: {
-    demo(city){
-      accessLeave({message:'访问访客统计',city}).catch(e => {})
-    },
     getData() {
       this.$store.dispatch("access/getAccessList", this.pag);
     },
@@ -132,15 +129,7 @@ export default {
     ...mapState({
       accessList: (state) => state.access.accessList,
       accessNum: (state) => state.access.accessNum,
-      city: (state) => state.access.city
     }),
   },
 };
 </script>
-
-<style scoped>
-.pagination {
-  margin-top: 20px;
-  text-align: center;
-}
-</style>

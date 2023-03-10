@@ -77,7 +77,7 @@ export const constantRoutes = [
         name: 'Article',
         component: () => import("@/views/article"),
         meta: {
-          title: '文章編輯',
+          title: '文章编辑',
           icon: 'el-icon-edit-outline'
         }
       }
@@ -114,12 +114,28 @@ export const constantRoutes = [
         name: 'ArticleEdit',
         meta: { title: '文章修改', icon: 'el-icon-edit-outline'}
       },
+      // {
+      //   path: 'articleImage',
+      //   component: () => import('@/views/list/articleImage'),
+      //   name: 'ArticleImage',
+      //   meta: { title: '封面编辑', icon: 'el-icon-picture'}
+      // },
+    ]
+  },
+  //时间轴管理
+  {
+    path: '/time',
+    component: Layout,
+    children: [
       {
-        path: 'articleImage',
-        component: () => import('@/views/list/articleImage'),
-        name: 'ArticleImage',
-        meta: { title: '封面编辑', icon: 'el-icon-picture'}
-      },
+        path: 'index',
+        name: 'Time',
+        component: () => import("@/views/time"),
+        meta: {
+          title: '时间轴管理',
+          icon: 'el-icon-collection-tag'
+        }
+      }
     ]
   },
   // 分类管理
@@ -169,38 +185,21 @@ export const constantRoutes = [
     ]
   },
   // 评论管理
-  // {
-  //   path: '/discuss',
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: 'index',
-  //       name: 'Discuss',
-  //       component: () => import("@/views/discuss"),
-  //       meta: {
-  //         title: '评论管理',
-  //         icon: 'el-icon-chat-dot-round'
-  //       }
-  //     }
-  //   ]
-  // },
-  // 时间轴管理
-  // {
-  //   path: '/time',
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: 'index',
-  //       name: 'Time',
-  //       component: () => import("@/views/time"),
-  //       meta: {
-  //         title: '时间轴管理',
-  //         icon: 'el-icon-collection-tag'
-  //       }
-  //     }
-  //   ]
-  // },
-
+  {
+    path: '/Review',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'Review',
+        component: () => import("@/views/review"),
+        meta: {
+          title: '评论管理',
+          icon: 'el-icon-chat-dot-round'
+        }
+      }
+    ]
+  },
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]

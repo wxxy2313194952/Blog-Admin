@@ -30,6 +30,7 @@
 <script>
 import { mapState,mapGetters } from "vuex";
 import { rulePuss } from "@/utils/rules";
+import { accessLeave } from '@/api/access'
 import {addArticleTag,editArticleTag,delArticleTag} from "@/api/artcate";
 export default {
   name: "ArticleTag",
@@ -147,10 +148,8 @@ export default {
     }),
   },
   mounted() {
-    this.getData();
+    this.getData()
+    accessLeave('访问文章标签管理列表(管理端)').catch(e => {})
   },
 };
 </script>
-
-<style scoped>
-</style>

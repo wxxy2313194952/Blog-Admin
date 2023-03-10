@@ -1,7 +1,8 @@
 import request from '@/utils/request'
-import Access from "@/utils/getAccessInfo";
+import Access from "@/utils/getAccessInfo"
+import { getCity } from "@/utils/city.js"
 // 添加访问记录
-export function accessLeave ({message,city}) {
+export function accessLeave (message) {
   return request({
     url: '/admin/access/setaccess',
     method: 'post',
@@ -11,7 +12,7 @@ export function accessLeave ({message,city}) {
       browser: Access.getBrowserName(),
       OSVersion: Access.getOSVersion(),
       BrowserVersion: Access.getBrowserVersion(),
-      city,
+      city: getCity(),
       show_type: message
     }
   })

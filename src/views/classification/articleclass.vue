@@ -30,6 +30,7 @@
 <script>
 import { mapState,mapGetters } from "vuex";
 import { rulePuss } from "@/utils/rules";
+import { accessLeave } from '@/api/access'
 import {
   addArticleClass,
   editArticleClass,
@@ -151,10 +152,8 @@ export default {
     }),
   },
   mounted() {
-    this.getData();
+    this.getData()
+    accessLeave('访问文章分类管理列表(管理端)').catch(e => {})
   },
 };
 </script>
-
-<style scoped>
-</style>

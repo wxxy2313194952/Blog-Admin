@@ -8,6 +8,8 @@ import article from './modules/article'
 import access from './modules/access'
 import artcate from './modules/artcate'
 import message from './modules/message'
+import review from './modules/review'
+import time from './modules/time'
 
 Vue.use(Vuex)
 
@@ -19,7 +21,9 @@ const store = new Vuex.Store({
     article,
     access,
     artcate,
-    message
+    message,
+    review,
+    time
   },
   getters
 })

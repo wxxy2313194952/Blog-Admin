@@ -62,7 +62,6 @@
       </el-table-column>
       <el-table-column
         header-align="center"
-        prop="classification"
         label="操作"
         width="210"
       >
@@ -88,7 +87,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <div class="pagination">
+    <div>
       <el-pagination
         background
         layout="prev, pager, next, jumper"
@@ -98,6 +97,7 @@
         prev-click
         next-click
         @current-change="handleCurrentChange"
+        style="margin-top: 35px;text-align: center;"
       >
       </el-pagination>
     </div>
@@ -124,14 +124,15 @@ export default {
   mounted() {
     this.getData();
     this.$store.dispatch("article/getArticleNum");
-    accessLeave({message:'访问文章管理列表',city:this.city}).catch(e => {})
-    
+    accessLeave('访问文章管理列表(管理端)').catch(e => {})
   },
   computed: {
+    ...mapGetters([
+      'rules'
+    ]),
     ...mapState({
       articleList: (state) => state.article.articleList,
       articleNum: (state) => state.article.articleNum,
-      city: (state) => state.access.city
     }),
   },
   methods: {
@@ -200,10 +201,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.pagination {
-  margin-top: 35px;
-  text-align: center;
-}
-</style>

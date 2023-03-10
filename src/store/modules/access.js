@@ -3,15 +3,11 @@
 import { reqGetAccessNum,reqGetAccessList } from '@/api/access'
 
 const state = {
-  city: '',
   accessNum: 0,
   accessList: []
 }
 
 const mutations = {
-  GETCITY (state, city) {
-    state.city = city
-  },
   GETACCESSNUM (state, accessNum) {
     state.accessNum = accessNum
   },
@@ -21,20 +17,6 @@ const mutations = {
 }
 
 const actions = {
-  //
-  // async getCity ({commit}) {
-  //   let result = await Axios.get('https://restapi.amap.com/v3/ip?key=3451452303fb16375647a3ca4b147578')
-  //   // console.log(result)
-  //   if (result.status == 200) {
-  //     commit('GETCITY', result.data.city)
-  //     return result.data.info
-  //   }else {
-  //     return Promise.reject(result.data.info)
-  //   }
-  // },
-  async getCity ({commit},city) {
-    commit('GETCITY', city) 
-    },
   // 获取访客总数接口
   async getAccessNum ({commit}) {
     let result = await reqGetAccessNum()

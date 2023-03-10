@@ -49,6 +49,17 @@ export function reqEditArticle(data) {
 }
 
 
+// 上传图片
+export function addPicture(data,params) {
+  return request({
+    url: `/admin/article/addpicture`,
+    method: 'post',
+    data,
+    params
+  })
+}
+
+
 
 
 

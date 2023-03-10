@@ -101,6 +101,7 @@ import Editor from "./editor";
 import { mapState,mapGetters } from 'vuex'
 import {reqAddArticle} from '@/api/article'
 import { rulePuss } from "@/utils/rules";
+import { accessLeave } from "@/api/access";
 export default {
   name: "Article",
   components: { Editor },
@@ -183,7 +184,6 @@ export default {
       // 此时我们只是储存了file，并没有直接提交，如果你需要直接提交直接在后面调用接口，传递FormData格式的file参数即可，复制submitFormData 里面的逻辑即可。
       this.imageUrl = URL.createObjectURL(file.file);
       this.form.cover_img = file.file;
-      // console.log(file);
     },
     handleChange(file, fileList) {
       let fileObj = {}
@@ -244,6 +244,7 @@ export default {
   mounted() {
     this.$store.dispatch('article/getArtClass')
     this.$store.dispatch('article/getArtTag')
+    accessLeave('访问文章编辑(管理端)').catch(e => {})
   }
 };
 </script>

@@ -19,6 +19,7 @@
     "babel-plugin-prismjs": "^2.1.0",
     "bowser": "^2.11.0",
     "core-js": "3.6.5",
+    "echarts": "^5.4.1",
     "element-ui": "^2.15.12",
     "js-cookie": "^3.0.1",
     "normalize.css": "7.0.0",

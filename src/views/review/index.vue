@@ -3,21 +3,53 @@
     <el-table
       :row-style="{ height: '30px' }"
       stripe
-      :data="messageList"
+      :data="reviewList"
       border
       style="width: 100%"
     >
-      <el-table-column align="center" type="index" width="60" label="序号">
+      <el-table-column
+        header-align="center"
+        prop="article_id"
+        width="200"
+        label="评论文章"
+      >
       </el-table-column>
-      <el-table-column header-align="center" prop="name" width="240" label="留言者">
+      <el-table-column header-align="center" prop="content" label="评论内容">
       </el-table-column>
-      <el-table-column header-align="center" prop="content" label="留言内容">
+      <el-table-column
+        header-align="center"
+        prop="name"
+        width="180"
+        label="评论者"
+      >
       </el-table-column>
-      <el-table-column header-align="center" prop="time" label="时间" width="97">
+      <el-table-column
+        header-align="center"
+        prop="email"
+        label="邮箱"
+        width="170"
+      >
       </el-table-column>
-      <el-table-column header-align="center" prop="email" label="邮箱" width="180">
+      <el-table-column
+        header-align="center"
+        prop="web"
+        label="网址"
+        width="170"
+      >
       </el-table-column>
-      <el-table-column header-align="center" prop="avatar" label="城市" width="120">
+      <el-table-column
+        header-align="center"
+        prop="time"
+        label="评论时间"
+        width="97"
+      >
+      </el-table-column>
+      <el-table-column
+        header-align="center"
+        prop="city"
+        label="评论来源"
+        width="90"
+      >
       </el-table-column>
       <el-table-column align="center" prop="avatar" label="头像" width="66">
       </el-table-column>
@@ -26,14 +58,16 @@
           <el-button
             size="mini"
             type="success"
-            style="margin-right:6px"
+            style="margin-right: 6px"
             @click="handleEdit(scope.$index, scope.row)"
-            >编辑</el-button>
+            >编辑</el-button
+          >
           <el-button
             size="mini"
             type="danger"
             @click="handleDelete(scope.$index, scope.row)"
-            >删除</el-button>
+            >删除</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
@@ -41,7 +75,7 @@
       <el-pagination
         background
         layout="prev, pager, next, jumper"
-        :total="this.messageNum"
+        :total="this.reviewNum"
         :page-size="this.pag.pageSize"
         :current-page="this.pag.pageNo"
         prev-click
@@ -55,14 +89,13 @@
 </template>
 
 <script>
+import { accessLeave } from "@/api/access";
 import { mapState,mapGetters } from "vuex";
 import { rulePuss } from "@/utils/rules";
-import { accessLeave } from '@/api/access'
-import {reqDelMessage,reqEditMessage} from '@/api/message'
-import { getCity } from "@/utils/city.js"
+import { reqDelReview, reqEditReview } from "@/api/review";
 export default {
-  name: 'Message',
-   data() {
+  name: "Review",
+  data() {
     return {
       pag: {
         // 每页显示的数量pageSize
@@ -74,16 +107,16 @@ export default {
   },
   mounted() {
     this.getData();
-    this.$store.dispatch("message/getMessageNum");
-    accessLeave('访问留言管理(管理端)').catch(e => {})
+    this.$store.dispatch("review/getReviewNum");
+    accessLeave("访问评论管理(管理端)").catch((e) => {});
   },
   computed: {
     ...mapGetters([
       'rules'
     ]),
     ...mapState({
-      messageList: (state) => state.message.messageList,
-      messageNum: (state) => state.message.messageNum,
+      reviewList: (state) => state.review.reviewList,
+      reviewNum: (state) => state.review.reviewNum,
     }),
   },
   methods: {
@@ -91,6 +124,7 @@ export default {
       this.$prompt("请输入修改内容", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
+        inputValue:row.content
       })
         .then(async ({ value }) => {
           // 判断权限
@@ -100,7 +134,8 @@ export default {
                 type: "error",
               });
           }else{
-            let res = await reqEditMessage({content: value,id: row.id});
+            // 进行逻辑处理
+            let res = await reqEditReview({ content: value, id: row.id });
             if (res.code == 200) {
               this.$message({
                 message: "修改成功",
@@ -125,33 +160,34 @@ export default {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning",
-      }).then(async() => {
-        // 判断权限
-        if(!rulePuss(this.rules)){
-          this.$message({
-              message: "权限不足，无法删除",
-              type: "error",
-            });
-        }else{
-          let res = await reqDelMessage(row.id);
-          if (res.code == 200) {
+      })
+        .then(async () => {
+          // 判断权限
+          if(!rulePuss(this.rules)){
             this.$message({
-              message: "删除成功",
-              type: "success",
-            })
-            this.getData()
-            return res.message
-          }else {
-            return Promise.reject(res.message)
+                message: "权限不足，无法修改",
+                type: "error",
+              });
+          }else{
+            let res = await reqDelReview(row.id);
+            if (res.code == 200) {
+              this.$message({
+                message: "删除成功",
+                type: "success",
+              });
+              this.getData();
+              return res.message;
+            } else {
+              return Promise.reject(res.message);
+            }
           }
-        }
-        
-      }).catch(() => {
-        this.$message({
-          type: "success",
-          message: "已取消删除",
+        })
+        .catch(() => {
+          this.$message({
+            type: "success",
+            message: "已取消删除",
+          });
         });
-      });
     },
     // 当前页改变时的回调
     handleCurrentChange(val) {
@@ -169,7 +205,7 @@ export default {
       }
     },
     getData() {
-      this.$store.dispatch("message/getMessageList", this.pag);
+      this.$store.dispatch("review/getReviewList", this.pag);
     },
   },
 }

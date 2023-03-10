@@ -6,13 +6,13 @@
 
 <script>
 import Axios from 'axios'
+import { setCity } from '@/utils/city.js'
 export default {
   name: 'App',
   async mounted() {
     await Axios.get('https://restapi.amap.com/v3/ip?key=3451452303fb16375647a3ca4b147578')
       .then(res => {
-        this.$store.dispatch("access/getCity",res.data.city);
-        this.$bus.$emit('getCity',res.data.city)
+        setCity(res.data.city)
       })
       .catch(e => console.log(e))
   },
