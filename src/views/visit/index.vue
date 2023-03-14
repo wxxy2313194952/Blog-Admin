@@ -66,7 +66,11 @@ export default {
   mounted() {
     this.getData();
     this.$store.dispatch("access/getAccessNum");
-    accessLeave('访问访客统计(管理端)').catch(e => {})
+    accessLeave({
+      message: '访问访客统计(管理端)',
+      user_behavior: 201,
+      user_menu: 202
+    }).catch(e => {})
   },
   methods: {
     getData() {

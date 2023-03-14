@@ -118,7 +118,7 @@ export const constantRoutes = [
       //   path: 'articleImage',
       //   component: () => import('@/views/list/articleImage'),
       //   name: 'ArticleImage',
-      //   meta: { title: '封面编辑', icon: 'el-icon-picture'}
+      //   meta: { title: '图片编辑', icon: 'el-icon-picture'}
       // },
     ]
   },

@@ -124,7 +124,11 @@ export default {
   mounted() {
     this.getData();
     this.$store.dispatch("article/getArticleNum");
-    accessLeave('访问文章管理列表(管理端)').catch(e => {})
+    accessLeave({
+      message: '访问文章管理列表(管理端)',
+      user_behavior: 201,
+      user_menu: 204
+    }).catch(e => {})
   },
   computed: {
     ...mapGetters([

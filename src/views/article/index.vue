@@ -244,7 +244,11 @@ export default {
   mounted() {
     this.$store.dispatch('article/getArtClass')
     this.$store.dispatch('article/getArtTag')
-    accessLeave('访问文章编辑(管理端)').catch(e => {})
+    accessLeave({
+      message: '访问文章编辑(管理端)',
+      user_behavior: 201,
+      user_menu: 203
+    }).catch(e => {})
   }
 };
 </script>

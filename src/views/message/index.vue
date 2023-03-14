@@ -75,7 +75,11 @@ export default {
   mounted() {
     this.getData();
     this.$store.dispatch("message/getMessageNum");
-    accessLeave('访问留言管理(管理端)').catch(e => {})
+    accessLeave({
+      message: '访问留言管理(管理端)',
+      user_behavior: 201,
+      user_menu: 211
+    }).catch(e => {})
   },
   computed: {
     ...mapGetters([

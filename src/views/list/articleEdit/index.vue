@@ -86,6 +86,7 @@ import Edit from "./edit";
 import { mapState,mapGetters } from "vuex";
 import { rulePuss } from "@/utils/rules";
 import { reqGetArticle, reqEditArticle } from "@/api/article";
+import { accessLeave } from '@/api/access'
 export default {
   name: "ArticleEdit",
   components: { Edit },
@@ -226,6 +227,11 @@ export default {
         message: "请选择文章",
       });
     }
+    accessLeave({
+      message: '访问文章修改(管理端)',
+      user_behavior: 201,
+      user_menu: 206
+    }).catch(e => {})
   },
 };
 </script>

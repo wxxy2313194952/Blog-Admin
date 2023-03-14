@@ -108,7 +108,11 @@ export default {
   mounted() {
     this.getData();
     this.$store.dispatch("review/getReviewNum");
-    accessLeave("访问评论管理(管理端)").catch((e) => {});
+    accessLeave({
+      message: "访问评论管理(管理端)",
+      user_behavior: 201,
+      user_menu: 212
+    }).catch((e) => {});
   },
   computed: {
     ...mapGetters([

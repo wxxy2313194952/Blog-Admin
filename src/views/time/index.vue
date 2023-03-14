@@ -81,7 +81,11 @@ export default {
   mounted() {
     this.getData();
     this.$store.dispatch("time/getTimeNum");
-    accessLeave("访问时间轴管理(管理端)").catch((e) => {});
+    accessLeave({
+      message: "访问时间轴管理(管理端)",
+      user_behavior: 201,
+      user_menu: 208
+    }).catch((e) => {});
   },
   computed: {
     ...mapGetters([

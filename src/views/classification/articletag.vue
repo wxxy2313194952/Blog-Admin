@@ -149,7 +149,11 @@ export default {
   },
   mounted() {
     this.getData()
-    accessLeave('访问文章标签管理列表(管理端)').catch(e => {})
+    accessLeave({
+      message: '访问文章标签管理(管理端)',
+      user_behavior: 201,
+      user_menu: 210
+    }).catch(e => {})
   },
 };
 </script>

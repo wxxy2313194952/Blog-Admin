@@ -153,7 +153,11 @@ export default {
   },
   mounted() {
     this.getData()
-    accessLeave('访问文章分类管理列表(管理端)').catch(e => {})
+    accessLeave({
+      message: '访问文章分类管理(管理端)',
+      user_behavior: 201,
+      user_menu: 209
+    }).catch(e => {})
   },
 };
 </script>

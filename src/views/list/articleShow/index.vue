@@ -58,6 +58,7 @@
 import EditShow from "./editShow";
 import { reqGetArticle } from "@/api/article";
 import { mapState } from "vuex";
+import { accessLeave } from '@/api/access'
 export default {
   name: "ArticleShow",
   components: { EditShow },
@@ -91,6 +92,11 @@ export default {
         message: "获取用户信息失败",
       });
     }
+    accessLeave({
+      message: '访问文章详情(管理端)',
+      user_behavior: 201,
+      user_menu: 205
+    }).catch(e => {})
   },
 };
 </script>
