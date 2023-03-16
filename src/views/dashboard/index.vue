@@ -37,7 +37,7 @@
       <el-col class="second-line" :span="6">
         <el-card>
           <div slot="header" class="clearfix">
-            <span class="ranking-title">流量统计</span>
+            <span class="ranking-title">数据排名</span>
             <el-button class="btn" size="mini" type="text" @click="changeRanking(1)"
               >浏览量排名</el-button
             >

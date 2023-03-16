@@ -16,10 +16,11 @@ export function reqGetReviewNum() {
   })
 }
 // 删除留言
-export function reqDelReview(id) {
+export function reqDelReview(params) {
   return request({
-    url: `/admin/review/delreview/${id}`,
+    url: `/admin/review/delreview`,
     method: 'get',
+    params
   })
 }
 // 编辑留言

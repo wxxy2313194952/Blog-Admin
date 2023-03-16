@@ -9,7 +9,7 @@
     >
       <el-table-column
         header-align="center"
-        prop="article_id"
+        prop="titlt"
         width="200"
         label="评论文章"
       >
@@ -160,7 +160,7 @@ export default {
         });
     },
     handleDelete(index, row) {
-      this.$confirm("确定删除该文章吗？", "提示", {
+      this.$confirm("确定删除这条评论吗？", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning",
@@ -173,7 +173,7 @@ export default {
                 type: "error",
               });
           }else{
-            let res = await reqDelReview(row.id);
+            let res = await reqDelReview({id:row.id,article_id:row.article_id});
             if (res.code == 200) {
               this.$message({
                 message: "删除成功",
